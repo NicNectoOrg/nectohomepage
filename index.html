@@ -1,80 +1,540 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coming Soon</title>
-  <meta name="description" content="Our new website is coming soon." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NECTO - Energy Strategy for Manufacturers</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --dark:#1a1a2a; --dark-mid:#2d2d42; --dark-soft:#4a4a64;
+    --purple:#7c3aed; --purple-dark:#6d28d9; --purple-light:#a78bfa;
+    --purple-pale:#ede9fe; --purple-xpale:#f5f3ff;
+    --white:#ffffff; --off-white:#f8f8fc;
+    --border:#e5e5f0; --border-p:#d8d0f5; --text-muted:#5a5a78;
+  }
+  html { scroll-behavior:smooth; scroll-padding-top:5.5rem; }
+  body { font-family:'Inter',sans-serif; background:var(--white); color:var(--dark); line-height:1.6; overflow-x:hidden; }
 
-    html, body {
-      height: 100%;
-      font-family: Inter, sans-serif;
-      background: #f4f4f4;
-      color: #222;
-    }
+  nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; align-items:center; gap:2rem; padding:1.1rem 5rem; background:rgba(255,255,255,0.97); backdrop-filter:blur(12px); border-bottom:1px solid var(--border-p); }
+  .nav-brand { display:flex; align-items:center; flex-shrink:0; text-decoration:none; }
+  .site-logo { display:block; height:28px; width:auto; }
+  footer .site-logo { height:24px; opacity:0.9; }
+  .nav-links { display:flex; align-items:center; justify-content:center; gap:clamp(1rem,2vw,2rem); list-style:none; flex:1; margin:0; padding:0; }
+  .nav-links a { font-family:'Montserrat',sans-serif; font-size:0.72rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); text-decoration:none; transition:color 0.2s; white-space:nowrap; }
+  .nav-links a:hover { color:var(--purple); }
+  .nav-cta { flex-shrink:0; background:var(--purple); color:var(--white); border:none; padding:0.6rem 1.5rem; font-family:'Montserrat',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; letter-spacing:0.07em; text-transform:uppercase; transition:background 0.2s,transform 0.2s; text-decoration:none; display:inline-block; border-radius:2px; }
+  .nav-cta:hover { background:var(--purple-dark); transform:translateY(-1px); }
 
-    body {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 2rem;
-    }
+  .btn-primary { background:var(--purple); color:var(--white); border:none; padding:0.95rem 2.25rem; font-family:'Montserrat',sans-serif; font-size:0.78rem; font-weight:700; cursor:pointer; transition:all 0.2s; text-decoration:none; display:inline-block; border-radius:2px; letter-spacing:0.07em; text-transform:uppercase; }
+  .btn-primary:hover { background:var(--purple-dark); transform:translateY(-1px); }
 
-    .container {
-      max-width: 700px;
-      background: #ffffff;
-      padding: 3rem 2rem;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-    }
+  .hero { min-height:100vh; display:grid; grid-template-columns:55fr 45fr; padding-top:68px; background:var(--white); }
+  .hero-left { display:flex; flex-direction:column; justify-content:center; padding:7rem 4rem 7rem 5rem; }
 
-    h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      letter-spacing: 1px;
-    }
+  .eyebrow { display:flex; align-items:center; gap:0.75rem; margin-bottom:1.75rem; }
+  .eyebrow-line { width:2rem; height:2px; background:var(--purple); flex-shrink:0; }
+  .eyebrow-text { font-family:'Montserrat',sans-serif; font-size:0.68rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--purple); }
 
-    p {
-      font-size: 1.1rem;
-      line-height: 1.6;
-      color: #555;
-      margin-bottom: 1rem;
-    }
+  .hero-headline { font-family:'Montserrat',sans-serif; font-size:clamp(2.8rem,4.2vw,4.4rem); font-weight:900; line-height:1.04; color:var(--dark); margin-bottom:1.75rem; letter-spacing:-0.03em; }
+  .hero-headline .hl { color:var(--purple); }
+  .hero-sub { font-size:1.05rem; font-weight:300; color:var(--text-muted); line-height:1.8; max-width:46ch; margin-bottom:2.5rem; }
+  .hero-cta-group { display:flex; align-items:center; gap:1.5rem; flex-wrap:wrap; }
 
-    .footer {
-      margin-top: 2rem;
-      font-size: 0.95rem;
-      color: #888;
-    }
+  .btn-ghost { color:var(--text-muted); font-size:0.875rem; text-decoration:none; transition:color 0.2s; }
+  .btn-ghost:hover { color:var(--purple); }
 
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2.2rem;
-      }
+  @keyframes dark-grid-drift-sm { from{background-position:0 0,0 0} to{background-position:44px 44px,44px 44px} }
+  @keyframes dark-grid-drift-lg { from{background-position:0 0,0 0} to{background-position:52px 52px,52px 52px} }
+  @keyframes dark-glow-pulse { 0%,100%{opacity:0.3;transform:translate(0,0) scale(1)} 50%{opacity:0.6;transform:translate(4%,-3%) scale(1.06)} }
+  @keyframes dark-line-pulse { 0%,100%{opacity:0.22} 50%{opacity:0.48} }
 
-      .container {
-        padding: 2rem 1.5rem;
-      }
-    }
-  </style>
+  .hero-right { background:var(--dark); position:relative; overflow:hidden; display:flex; flex-direction:column; justify-content:flex-end; }
+  .hero-right::after { content:''; position:absolute; width:70%; height:80%; top:-15%; right:-20%; background:radial-gradient(ellipse at center,rgba(124,58,237,0.16) 0%,transparent 68%); pointer-events:none; z-index:2; animation:dark-glow-pulse 11s ease-in-out infinite; }
+  .hr-grid { position:absolute; inset:0; z-index:2; pointer-events:none; background-image:linear-gradient(rgba(124,58,237,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.07) 1px,transparent 1px); background-size:44px 44px; animation:dark-grid-drift-sm 28s linear infinite; }
+  .hr-rule { position:absolute; top:50%; left:0; right:0; height:2px; z-index:2; pointer-events:none; background:var(--purple); opacity:0.35; animation:dark-line-pulse 7s ease-in-out infinite; }
+  .hr-photo { position:absolute; inset:0; z-index:0; }
+  .hero-img { width:100%; height:100%; object-fit:cover; object-position:center 22%; display:block; }
+  .hr-overlay { position:absolute; inset:0; z-index:1; background:linear-gradient(to top,rgba(26,26,42,0.97) 0%,rgba(26,26,42,0.55) 38%,rgba(26,26,42,0.15) 68%,transparent 100%); pointer-events:none; }
+  .hero-namecard { position:relative; z-index:3; overflow:hidden; padding:2rem 2.5rem; border-top:1px solid rgba(255,255,255,0.07); background:rgba(26,26,42,0.88); }
+  .hero-namecard::before { content:''; position:absolute; inset:0; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(124,58,237,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.08) 1px,transparent 1px); background-size:44px 44px; animation:dark-grid-drift-sm 26s linear infinite; opacity:0; }
+  .hero-namecard > * { position:relative; z-index:1; }
+  .nc-name { font-family:'Montserrat',sans-serif; font-size:1.35rem; font-weight:800; color:var(--white); letter-spacing:-0.02em; margin-bottom:0.2rem; }
+  .nc-role { font-size:0.7rem; color:var(--purple-light); letter-spacing:0.1em; text-transform:uppercase; font-weight:600; margin-bottom:1rem; font-family:'Montserrat',sans-serif; }
+  .nc-badges { display:flex; flex-wrap:wrap; gap:0.35rem; }
+  .badge { font-size:0.65rem; font-weight:500; padding:0.2rem 0.6rem; border:1px solid rgba(124,58,237,0.4); color:var(--purple-light); background:rgba(124,58,237,0.1); letter-spacing:0.04em; border-radius:2px; }
+
+  .stat-strip { position:relative; background:var(--dark); border-top:3px solid var(--purple); overflow:hidden; }
+  .stat-strip::before { content:''; position:absolute; inset:0; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(124,58,237,0.06) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.06) 1px,transparent 1px); background-size:44px 44px; animation:dark-grid-drift-sm 32s linear infinite; }
+  .stat-strip::after { content:''; position:absolute; width:50%; height:130%; top:-20%; left:-10%; background:radial-gradient(ellipse at center,rgba(124,58,237,0.12) 0%,transparent 70%); pointer-events:none; z-index:0; animation:dark-glow-pulse 9s ease-in-out infinite; }
+  .stat-strip-track { position:relative; z-index:1; display:grid; grid-template-columns:repeat(4,1fr); }
+  .stat-item { padding:2.25rem 2rem; border-right:1px solid rgba(255,255,255,0.06); }
+  .stat-strip-track > .stat-item:last-child { border-right:none; }
+  .stat-item--clone { display:none; }
+  @keyframes stat-marquee { from{transform:translateX(0)} to{transform:translateX(-50%)} }
+  .stat-num { font-family:'Montserrat',sans-serif; font-size:2rem; font-weight:900; color:var(--white); display:block; line-height:1; margin-bottom:0.4rem; letter-spacing:-0.04em; }
+  .stat-num .ac { color:var(--purple-light); }
+  .stat-label { font-size:0.68rem; color:rgba(255,255,255,0.3); text-transform:uppercase; letter-spacing:0.12em; }
+
+  section { padding:6rem 5rem; }
+  .sec-eyebrow { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.9rem; }
+  .sec-eyebrow::before { content:''; display:block; width:1.5rem; height:2px; background:var(--purple); flex-shrink:0; }
+  .sec-eyebrow span { font-family:'Montserrat',sans-serif; font-size:0.67rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--purple); }
+  .sec-title { font-family:'Montserrat',sans-serif; font-size:clamp(1.7rem,2.6vw,2.4rem); font-weight:900; color:var(--dark); line-height:1.1; letter-spacing:-0.03em; margin-bottom:1.25rem; }
+
+  .problem { background:var(--off-white); }
+  .problem-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-top:3rem; }
+  .problem-card { background:var(--white); border:1px solid var(--border-p); border-top:3px solid var(--purple); padding:2.25rem 1.75rem; transition:transform 0.2s,box-shadow 0.2s; }
+  .problem-card:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(124,58,237,0.1); }
+  .problem-num { font-family:'Montserrat',sans-serif; font-size:2.5rem; font-weight:900; color:var(--purple-pale); line-height:1; margin-bottom:1rem; letter-spacing:-0.05em; }
+  .problem-text { font-size:0.9rem; color:var(--text-muted); line-height:1.75; font-weight:300; }
+  .problem-text strong { color:var(--dark); font-weight:600; }
+
+  .solution { background:var(--white); }
+  .solution-layout { display:flex; flex-direction:column; gap:3rem; margin-top:3rem; }
+  .solution-top { display:grid; grid-template-columns:1fr 1fr; gap:3rem 5rem; align-items:start; }
+  .solution-video-wrap { position:relative; aspect-ratio:1; border-radius:4px; overflow:hidden; border:1px solid var(--border-p); background:var(--dark); align-self:start; }
+  .solution-video-wrap::before { content:''; position:absolute; inset:0; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(124,58,237,0.09) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.09) 1px,transparent 1px); background-size:36px 36px; animation:dark-grid-drift-sm 22s linear infinite; }
+  .solution-video-wrap .solution-video { position:relative; z-index:1; }
+  .solution-box { background:var(--purple); padding:3rem; border-radius:4px; position:relative; overflow:hidden; }
+  .solution-box::before { content:''; position:absolute; top:-3rem; right:-3rem; width:14rem; height:14rem; border:1px solid rgba(255,255,255,0.1); border-radius:50%; }
+  .solution-box::after { content:''; position:absolute; bottom:-2rem; left:-2rem; width:10rem; height:10rem; border:1px solid rgba(255,255,255,0.07); border-radius:50%; }
+  .solution-body { font-size:1rem; font-weight:300; color:var(--text-muted); line-height:1.85; margin-bottom:1.5rem; }
+  .solution-body strong { color:var(--dark); font-weight:600; }
+  .solution-video { width:100%; height:100%; display:block; object-fit:cover; object-position:center 62%; }
+  .solution-box-header { position:relative; z-index:1; margin-bottom:2rem; }
+  .sr-label { font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:rgba(255,255,255,0.6); margin-bottom:0.75rem; }
+  .sr-title { font-family:'Montserrat',sans-serif; font-size:1.5rem; font-weight:900; color:var(--white); line-height:1.2; letter-spacing:-0.02em; }
+  .sr-items { display:grid; grid-template-columns:repeat(3,1fr); gap:2rem; position:relative; z-index:1; }
+  .sr-item { display:flex; gap:1rem; padding:0 1.5rem 0 0; border-right:1px solid rgba(255,255,255,0.12); align-items:flex-start; }
+  .sr-item:last-child { border-right:none; padding-right:0; }
+  .sr-num { font-family:'Montserrat',sans-serif; font-size:1.4rem; font-weight:900; color:rgba(255,255,255,0.2); line-height:1; flex-shrink:0; padding-top:0.1rem; }
+  .sr-item-title { font-family:'Montserrat',sans-serif; font-size:0.75rem; font-weight:800; color:var(--white); text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.3rem; }
+  .sr-item-desc { font-size:0.85rem; color:rgba(255,255,255,0.65); font-weight:300; line-height:1.6; }
+
+  .the-call { background:var(--dark); padding:6rem 5rem; position:relative; overflow:hidden; }
+  .the-call::after { content:''; position:absolute; width:45%; height:120%; bottom:-30%; right:-8%; background:radial-gradient(ellipse at center,rgba(124,58,237,0.15) 0%,transparent 68%); pointer-events:none; z-index:0; animation:dark-glow-pulse 12s ease-in-out infinite; }
+  .tc-grid { position:absolute; inset:0; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(124,58,237,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.05) 1px,transparent 1px); background-size:52px 52px; animation:dark-grid-drift-lg 34s linear infinite; }
+  .tc-inner { position:relative; z-index:1; }
+  .tc-header { display:grid; grid-template-columns:1fr 1fr; gap:5rem; align-items:start; margin-bottom:4rem; }
+  .tc-photo { border-radius:4px; overflow:hidden; border:2px solid rgba(124,58,237,0.35); aspect-ratio:4/3; }
+  .tc-photo img { width:100%; height:100%; object-fit:cover; object-position:center 30%; display:block; }
+  .tc-sec-eyebrow { display:flex; align-items:center; gap:0.75rem; margin-bottom:0.9rem; }
+  .tc-sec-eyebrow::before { content:''; display:block; width:1.5rem; height:2px; background:var(--purple-light); flex-shrink:0; }
+  .tc-sec-eyebrow span { font-family:'Montserrat',sans-serif; font-size:0.67rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:var(--purple-light); }
+  .tc-title { font-family:'Montserrat',sans-serif; font-size:clamp(1.7rem,2.6vw,2.4rem); font-weight:900; color:var(--white); line-height:1.1; letter-spacing:-0.03em; margin-bottom:1.5rem; }
+  .tc-title .hl { color:var(--purple-light); }
+  .tc-right-text { font-size:1rem; font-weight:300; color:rgba(255,255,255,0.5); line-height:1.85; }
+  .tc-right-text strong { color:rgba(255,255,255,0.8); font-weight:500; }
+
+  .tc-cta-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1.5rem; padding-top:3rem; border-top:1px solid rgba(124,58,237,0.2); }
+  .tc-cta-headline { font-family:'Montserrat',sans-serif; font-size:1.35rem; font-weight:900; color:var(--white); letter-spacing:-0.025em; margin-bottom:0.4rem; }
+  .tc-cta-sub { font-size:0.875rem; color:rgba(255,255,255,0.35); font-weight:300; max-width:52ch; }
+  .btn-cta-white { background:var(--white); color:var(--purple-dark); border:none; padding:1.1rem 2.75rem; font-family:'Montserrat',sans-serif; font-size:0.82rem; font-weight:800; letter-spacing:0.07em; text-transform:uppercase; border-radius:2px; transition:all 0.2s; text-decoration:none; display:inline-block; white-space:nowrap; flex-shrink:0; }
+  .btn-cta-white:hover { background:var(--purple-pale); transform:translateY(-2px); }
+
+  .who { background:var(--purple-xpale); }
+  .who-layout { display:grid; grid-template-columns:minmax(260px,40%) 1fr; gap:3.5rem; margin-top:3rem; align-items:start; }
+  .who-visual { position:sticky; top:5.5rem; align-self:start; }
+  .who-photo { border-radius:4px; overflow:hidden; border:1px solid var(--border-p); aspect-ratio:4/5; margin:0; }
+  .who-photo img { width:100%; height:100%; object-fit:cover; object-position:center 35%; display:block; }
+  .who-content { display:flex; flex-direction:column; gap:1.25rem; }
+  .signal-list { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+  .signal-item { display:flex; gap:1rem; padding:1.1rem 1.25rem; background:var(--white); border:1px solid var(--border-p); border-left:3px solid var(--purple); align-items:flex-start; transition:box-shadow 0.2s; }
+  .signal-item:hover { box-shadow:0 4px 16px rgba(124,58,237,0.1); }
+  .signal-dot { width:7px; height:7px; background:var(--purple); border-radius:50%; flex-shrink:0; margin-top:0.45rem; }
+  .signal-text { font-size:0.88rem; color:var(--text-muted); line-height:1.65; font-weight:300; }
+  .signal-text strong { color:var(--dark); font-weight:600; }
+  .who-box { position:relative; overflow:hidden; background:var(--dark); padding:2.5rem; border-radius:3px; border-top:3px solid var(--purple); }
+  .who-box::before { content:''; position:absolute; inset:0; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(124,58,237,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.07) 1px,transparent 1px); background-size:40px 40px; animation:dark-grid-drift-sm 30s linear infinite; }
+  .who-box::after { content:''; position:absolute; width:70%; height:90%; top:-20%; right:-25%; background:radial-gradient(ellipse at center,rgba(124,58,237,0.14) 0%,transparent 65%); pointer-events:none; z-index:0; animation:dark-glow-pulse 10s ease-in-out infinite; }
+  .who-box > * { position:relative; z-index:1; }
+  .who-box-label { font-family:'Montserrat',sans-serif; font-size:0.65rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--purple-light); margin-bottom:0.65rem; font-weight:700; }
+  .who-box-title { font-family:'Montserrat',sans-serif; font-size:1.2rem; font-weight:800; color:var(--white); line-height:1.25; margin-bottom:1.25rem; letter-spacing:-0.02em; }
+  .who-box-body { font-size:0.85rem; color:rgba(255,255,255,0.78); line-height:1.8; font-weight:300; }
+  .who-box-divider { height:1px; background:rgba(255,255,255,0.14); margin:1.25rem 0; }
+  .who-box-note { font-size:0.8rem; color:rgba(255,255,255,0.62); line-height:1.75; font-weight:300; font-style:italic; }
+
+  .bio { background:var(--white); }
+  .bio-layout { display:grid; grid-template-columns:260px 1fr; gap:5rem; margin-top:3rem; align-items:start; }
+  .bio-sticky { position:sticky; top:5.5rem; }
+  .bio-photo { width:100%; aspect-ratio:1; background:var(--dark); margin-bottom:1.5rem; overflow:hidden; border-radius:3px; }
+  .bio-photo img { width:100%; height:100%; object-fit:cover; object-position:center 22%; display:block; }
+  .bio-name { font-family:'Montserrat',sans-serif; font-size:1.1rem; font-weight:800; color:var(--dark); letter-spacing:-0.02em; margin-bottom:0.2rem; }
+  .bio-role { font-family:'Montserrat',sans-serif; font-size:0.67rem; color:var(--purple); text-transform:uppercase; letter-spacing:0.12em; font-weight:700; margin-bottom:1rem; }
+  .bio-linkedin { display:inline-flex; align-items:center; gap:0.4rem; font-size:0.78rem; color:var(--purple); text-decoration:none; font-weight:500; border-bottom:1px solid var(--purple-pale); padding-bottom:0.1rem; transition:border-color 0.2s; margin-bottom:1.25rem; }
+  .bio-linkedin:hover { border-color:var(--purple); }
+  .bio-creds { display:flex; flex-direction:column; gap:0.4rem; }
+  .bio-cred { font-size:0.75rem; color:var(--text-muted); display:flex; align-items:center; gap:0.5rem; font-weight:300; }
+  .bio-cred::before { content:''; display:block; width:4px; height:4px; background:var(--purple); border-radius:50%; flex-shrink:0; }
+
+  .bio-lede { font-size:1.05rem; color:var(--dark); line-height:1.85; font-weight:300; margin-bottom:1.5rem; border-left:3px solid var(--purple); padding-left:1.25rem; }
+  .bio-body { font-size:0.9rem; color:var(--text-muted); line-height:1.9; font-weight:300; margin-bottom:1.1rem; }
+
+  .what { background:var(--off-white); }
+  .what-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; margin-top:3rem; margin-bottom:4rem; }
+  .what-card { background:var(--white); border:1px solid var(--border-p); border-top:3px solid var(--purple); padding:2.25rem 1.75rem; transition:transform 0.2s,box-shadow 0.2s; border-radius:3px; }
+  .what-card:hover { transform:translateY(-2px); box-shadow:0 6px 24px rgba(124,58,237,0.1); }
+  .what-num { font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:800; color:var(--purple); text-transform:uppercase; letter-spacing:0.2em; margin-bottom:1rem; display:flex; align-items:center; gap:0.5rem; }
+  .what-num::after { content:''; flex:1; height:1px; background:var(--border-p); }
+  .what-title { font-family:'Montserrat',sans-serif; font-size:0.95rem; font-weight:800; color:var(--dark); margin-bottom:0.65rem; letter-spacing:-0.01em; }
+  .what-body { font-size:0.85rem; color:var(--text-muted); line-height:1.75; font-weight:300; }
+
+  .final-cta { position:relative; width:100%; padding:6rem 5rem; display:flex; align-items:center; overflow:hidden; min-height:32rem; }
+  .final-cta-bg { position:absolute; inset:0; background:url('images/P5211725.jpg') center 35%/cover no-repeat; }
+  .final-cta-bg::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,rgba(26,26,42,0.88) 0%,rgba(26,26,42,0.75) 42%,rgba(26,26,42,0.35) 70%,rgba(26,26,42,0.25) 100%); }
+  .final-cta-inner { position:relative; z-index:1; width:100%; max-width:72rem; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+  .final-cta-content { background:var(--purple); padding:3rem 3.5rem; border-radius:4px; border-top:3px solid var(--purple-light); box-shadow:0 16px 48px rgba(0,0,0,0.28); }
+  .final-cta-eyebrow { font-family:'Montserrat',sans-serif; font-size:0.65rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--purple-light); margin-bottom:1rem; }
+  .final-cta-title { font-family:'Montserrat',sans-serif; font-size:clamp(1.35rem,2.2vw,1.85rem); font-weight:900; color:var(--white); line-height:1.15; letter-spacing:-0.03em; margin-bottom:1rem; }
+  .final-cta-sub { font-size:1rem; color:rgba(255,255,255,0.72); font-weight:300; line-height:1.75; margin-bottom:2rem; max-width:42ch; }
+  .final-cta-media { min-height:12rem; }
+
+  footer { position:relative; overflow:hidden; background:var(--dark); padding:1.75rem 5rem; display:flex; align-items:center; justify-content:space-between; border-top:2px solid var(--purple); }
+  footer::before { content:''; position:absolute; inset:0; z-index:0; pointer-events:none; background-image:linear-gradient(rgba(124,58,237,0.05) 1px,transparent 1px),linear-gradient(90deg,rgba(124,58,237,0.05) 1px,transparent 1px); background-size:44px 44px; animation:dark-grid-drift-sm 38s linear infinite; }
+  footer > * { position:relative; z-index:1; }
+  .footer-copy { font-size:0.75rem; color:rgba(255,255,255,0.2); font-weight:300; }
+
+  @keyframes fadeUp { from{opacity:0;transform:translateY(18px)} to{opacity:1;transform:translateY(0)} }
+  .eyebrow        { animation:fadeUp 0.5s ease 0.1s both; }
+  .hero-headline  { animation:fadeUp 0.5s ease 0.22s both; }
+  .hero-sub       { animation:fadeUp 0.5s ease 0.36s both; }
+  .hero-cta-group { animation:fadeUp 0.5s ease 0.5s both; }
+
+  @media (max-width:960px) {
+    nav { justify-content:space-between; gap:0.75rem; padding:1rem 1.25rem; }
+    .nav-links { display:none !important; }
+    .nav-brand .site-logo { height:24px; max-width:9.5rem; width:auto; }
+    .nav-cta { margin-left:auto; padding:0.55rem 1rem; font-size:0.7rem; }
+    .hero { grid-template-columns:1fr; min-height:auto; }
+    .hero-left { padding:6.5rem 1.5rem 2.5rem; }
+    .hero-right { min-height:auto; flex-direction:column; justify-content:flex-start; }
+    .hero-right::after,.hero-right .hr-rule,.hero-right .hr-overlay { display:none; }
+    .hero-right .hr-grid { display:block; opacity:0.45; }
+    .hero-namecard::before { opacity:1; }
+    .hero-right .hr-photo { position:relative; inset:auto; width:100%; aspect-ratio:1; overflow:hidden; }
+    .hero-right .hero-img { height:100%; min-height:unset; }
+    .hero-right .hero-namecard { border-top:none; background:var(--dark); }
+    .stat-strip-track { display:flex; width:max-content; animation:stat-marquee 36s linear infinite; }
+    .stat-strip-track:hover { animation-play-state:paused; }
+    .stat-item--clone { display:block; }
+    .stat-strip-track > .stat-item { flex:0 0 72vw; min-width:14rem; max-width:18rem; border-right:1px solid rgba(255,255,255,0.06); }
+    .stat-strip-track > .stat-item:last-child { border-right:1px solid rgba(255,255,255,0.06); }
+    .problem-grid,.what-grid { display:flex; flex-wrap:nowrap; gap:1rem; overflow-x:auto; margin-left:-1.5rem; margin-right:-1.5rem; padding:0 1.5rem 0.75rem; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+    .problem-grid::-webkit-scrollbar,.what-grid::-webkit-scrollbar { display:none; }
+    .problem-card,.what-card { flex:0 0 min(82vw,18rem); scroll-snap-align:start; }
+    .solution-top,.who-layout,.bio-layout,.tc-header { grid-template-columns:1fr; gap:2.5rem; }
+    .sr-items { grid-template-columns:1fr; gap:0; }
+    .sr-item { padding:1.25rem 0; border-right:none; border-bottom:1px solid rgba(255,255,255,0.12); }
+    .sr-item:last-child { border-bottom:none; padding-bottom:0; }
+    .tc-photo { aspect-ratio:16/10; max-height:320px; }
+    .who-visual { position:static; }
+    .who-photo { aspect-ratio:16/10; }
+    .bio-sticky { position:static; }
+    section,.problem,.solution,.the-call,.who,.bio,.what { padding:3.5rem 1.5rem; }
+    .final-cta { padding:4rem 1.5rem; min-height:auto; }
+    .final-cta-inner { grid-template-columns:1fr; gap:0; }
+    .final-cta-content { padding:2.5rem 1.75rem; }
+    .final-cta-media { display:none; }
+    .final-cta-bg::after { background:linear-gradient(rgba(26,26,42,0.82),rgba(26,26,42,0.65)); }
+    footer { padding:1.5rem; flex-direction:column; gap:0.75rem; text-align:center; }
+    .tc-cta-row { flex-direction:column; align-items:flex-start; }
+  }
+  @media (max-width:960px) and (prefers-reduced-motion:reduce) {
+    .stat-strip-track { animation:none; overflow-x:auto; scroll-snap-type:x mandatory; -webkit-overflow-scrolling:touch; }
+    .stat-strip-track > .stat-item { scroll-snap-align:start; }
+  }
+  @media (prefers-reduced-motion:reduce) {
+    .hr-grid,.tc-grid,.stat-strip::before,.who-box::before,.footer::before,.solution-video-wrap::before,.hero-namecard::before { animation:none; }
+    .hero-right::after,.the-call::after,.stat-strip::after,.who-box::after,.hr-rule { animation:none; }
+  }
+</style>
 </head>
 <body>
-  <main class="container">
-    <img src="https://i.imgur.com/cq4YfAS.png" alt="NECTO logo" width="290" height="78" style="margin-bottom: 1.5rem;">
-    <h1>Coming Soon</h1>
-    <p>We’re working on something great.</p>
-    <p>Our new website will be launching soon. Please check back later.</p>
-    <div class="footer">© 2026 Nic Jacobson</div>
-  </main>
+
+<nav>
+  <a href="#top" class="nav-brand"><img src="images/logo.png" alt="NECTO" class="site-logo" width="280" height="71"></a>
+  <ul class="nav-links">
+    <li><a href="#solution">What I do</a></li>
+    <li><a href="#who">Who it's for</a></li>
+    <li><a href="#bio">About</a></li>
+  </ul>
+  <a href="https://calendar.notion.so/meet/nic-necto/30min" class="nav-cta">Book a Call</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="top" style="padding:0;">
+  <div class="hero-left">
+    <div class="eyebrow">
+      <div class="eyebrow-line"></div>
+      <span class="eyebrow-text">Independent Energy Strategy</span>
+    </div>
+    <h1 class="hero-headline">
+      You've done the<br>solar and battery.<br><span class="hl">Now what?</span>
+    </h1>
+    <p class="hero-sub">Most manufacturers have made the first investment. But solar and a battery is a product, not a strategy. What comes next requires someone who can see the whole picture.</p>
+    <div class="hero-cta-group">
+      <a href="https://calendar.notion.so/meet/nic-necto/30min" class="btn-primary">Book Your Free 30-Minute Call →</a>
+      <a href="#solution" class="btn-ghost">See what's involved ↓</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hr-grid"></div>
+    <div class="hr-rule"></div>
+    <div class="hr-photo">
+      <img class="hero-img" src="images/IMG_2125.jpg" alt="Nic Jacobson in a strategy conversation with a client" width="1400" height="1400">
+    </div>
+    <div class="hr-overlay" aria-hidden="true"></div>
+    <div class="hero-namecard">
+      <div class="nc-name">Nic Jacobson</div>
+      <div class="nc-role">Founder, NECTO · Energy Engineer · CPEng FIEAust</div>
+      <div class="nc-badges">
+        <span class="badge">MSc Renewable Energy</span>
+        <span class="badge">20+ Years</span>
+        <span class="badge">Acciona · GHD · EnerVenue</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stat-strip">
+  <div class="stat-strip-track">
+    <div class="stat-item">
+      <span class="stat-num">20<span class="ac">+</span></span>
+      <span class="stat-label">Years in energy</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">$1<span class="ac">M+</span></span>
+      <span class="stat-label">Project funding facilitated</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">9<span class="ac">+</span></span>
+      <span class="stat-label">Major energy organisations</span>
+    </div>
+    <div class="stat-item">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Continents of energy experience</span>
+    </div>
+    <div class="stat-item stat-item--clone" aria-hidden="true">
+      <span class="stat-num">20<span class="ac">+</span></span>
+      <span class="stat-label">Years in energy</span>
+    </div>
+    <div class="stat-item stat-item--clone" aria-hidden="true">
+      <span class="stat-num">$1<span class="ac">M+</span></span>
+      <span class="stat-label">Project funding facilitated</span>
+    </div>
+    <div class="stat-item stat-item--clone" aria-hidden="true">
+      <span class="stat-num">9<span class="ac">+</span></span>
+      <span class="stat-label">Major energy organisations</span>
+    </div>
+    <div class="stat-item stat-item--clone" aria-hidden="true">
+      <span class="stat-num">3</span>
+      <span class="stat-label">Continents of energy experience</span>
+    </div>
+  </div>
+</div>
+
+<!-- PROBLEM -->
+<section class="problem" id="problem">
+  <div class="sec-eyebrow"><span>The problem</span></div>
+  <h2 class="sec-title">Solar was the right first step...<br>But it was only the first step.</h2>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-num">01</div>
+      <p class="problem-text"><strong>The bills are still high.</strong> You've invested in solar and a battery - but you're still only 40% of the way there, and you don't know where to go next.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">02</div>
+      <p class="problem-text"><strong>Everyone has solar now.</strong> When you're applying for tenders and everyone in your industry has made the same investment, how do you stand out? A comprehensive energy strategy is how you differentiate - and how you answer the Scope 3 questions your customers are starting to ask.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-num">03</div>
+      <p class="problem-text"><strong>You're making decisions in the dark.</strong> Without a whole-of-system view - across your heat loads, cooling, water, production schedules, and energy use - you're investing in pieces instead of a strategy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTION -->
+<section class="solution" id="solution">
+  <div class="solution-layout">
+    <div class="solution-top">
+      <div class="solution-text">
+        <div class="sec-eyebrow"><span>The solution</span></div>
+        <h2 class="sec-title">What you actually need<br>is an energy strategy.</h2>
+        <p class="solution-body">Solar was the obvious move. It makes sense on almost every roof. But solar is a product - and a product is not a strategy. <strong>A strategy starts with understanding your whole energy picture</strong>: when you use energy, in what forms, what it's actually costing you, and where it's being wasted.</p>
+        <p class="solution-body">Most of the businesses I work with have made sound individual investments. The gap is almost never the technology - it's that no one has ever sat down and mapped a staged journey from where they are today to where they need to be, without trying to sell them something at the end of it.</p>
+        <p class="solution-body" style="margin-bottom:0">That's the work NECTO does. And the starting point is a 30-minute conversation.</p>
+      </div>
+      <div class="solution-video-wrap">
+        <video class="solution-video" src="images/edited-video.mp4" controls playsinline preload="metadata" aria-label="Nic Jacobson on energy strategy for manufacturers">
+          <source src="images/edited-video.mp4" type="video/mp4">
+        </video>
+      </div>
+    </div>
+    <div class="solution-box">
+      <div class="solution-box-header">
+        <div class="sr-label">What a strategy unlocks</div>
+        <div class="sr-title">The benefits solar alone will never get you to</div>
+      </div>
+      <div class="sr-items">
+        <div class="sr-item">
+          <div class="sr-num">→</div>
+          <div>
+            <div class="sr-item-title">Lower energy costs that actually hold</div>
+            <p class="sr-item-desc">Meaningful cost reduction from a whole-of-site approach that optimises how energy is generated, stored, and used across your operations.</p>
+          </div>
+        </div>
+        <div class="sr-item">
+          <div class="sr-num">→</div>
+          <div>
+            <div class="sr-item-title">Sustainability credentials you can defend</div>
+            <p class="sr-item-desc">A documented, staged energy plan that answers the questions your supply chain customers are starting to ask - and sets you apart in tenders.</p>
+          </div>
+        </div>
+        <div class="sr-item">
+          <div class="sr-num">→</div>
+          <div>
+            <div class="sr-item-title">Decisions you won't regret in ten years</div>
+            <p class="sr-item-desc">Infrastructure choices built around your planning horizon and ownership structure - so the investment made today makes sense in 2035.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE CALL -->
+<section class="the-call" id="call">
+  <div class="tc-grid"></div>
+  <div class="tc-inner">
+    <div class="tc-header">
+      <figure class="tc-photo">
+        <img src="images/P1101878.jpg" alt="Nic Jacobson presenting to manufacturing leaders" width="1400" height="933" loading="lazy">
+      </figure>
+      <div class="tc-copy">
+        <div class="tc-sec-eyebrow"><span>Book a free 30-minute call</span></div>
+        <h2 class="tc-title">In 30 minutes, I'll find<br><span class="hl">at least three things</span><br>your setup is leaving on the table.</h2>
+        <div class="tc-right-text">
+          <p>I'll ask you a series of questions about your current setup, your costs, and your goals. By the end of 30 minutes, <strong>you'll have at least three specific things you can act on</strong> - some immediately, some that point toward a bigger opportunity.</p>
+          <br>
+          <p>If it makes sense to go further together, I'll tell you what that looks like. A full strategy engagement typically runs $5,000-$15,000. Most clients find significantly more on the table than they expected.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tc-cta-row">
+      <div class="tc-cta-copy">
+        <div class="tc-cta-headline">Ready to find out what your energy setup is actually costing you?</div>
+        <p class="tc-cta-sub">Pick a time directly in my calendar. You'll walk away with something useful either way.</p>
+      </div>
+      <a href="https://calendar.notion.so/meet/nic-necto/30min" class="btn-cta-white">Book My Free 30-Minute Call →</a>
+    </div>
+  </div>
+</section>
+
+<!-- WHO -->
+<section class="who" id="who">
+  <div class="sec-eyebrow"><span>Who this is for</span></div>
+  <h2 class="sec-title">You're the right fit if<br>any of these land.</h2>
+  <div class="who-layout">
+    <div class="who-visual">
+      <figure class="who-photo">
+        <img src="images/P1101910.jpg" alt="Nic Jacobson at a ThincLab networking event" width="921" height="1200" loading="lazy">
+      </figure>
+    </div>
+    <div class="who-content">
+      <div class="who-box">
+        <div class="who-box-label">Typical client profile</div>
+        <div class="who-box-title">$5M-$50M revenue manufacturer, anywhere in Australia</div>
+        <p class="who-box-body">Senior leadership - MD, Operations Manager, or CFO - who has already made one round of energy investment and needs an independent view on what the next round should look like.</p>
+        <div class="who-box-divider"></div>
+        <p class="who-box-note">The businesses I work with are typically responding to tenders from organisations at $100M+ revenue - mandatory reporters who are beginning to ask their supply chain about carbon intensity. Your sustainability performance is starting to affect your ability to win work.</p>
+      </div>
+      <ul class="signal-list">
+        <li class="signal-item"><div class="signal-dot"></div><span class="signal-text"><strong>You manufacture something.</strong> The energy complexity that makes this work valuable lives in heat loads, cooling, water systems, and production schedules - not just a lights-and-HVAC bill.</span></li>
+        <li class="signal-item"><div class="signal-dot"></div><span class="signal-text"><strong>You've already started the journey.</strong> Solar on the roof, maybe a battery. The first step is done. But the bills haven't come down the way you expected and you're not sure what comes next.</span></li>
+        <li class="signal-item"><div class="signal-dot"></div><span class="signal-text"><strong>Your customers are asking about Scope 3.</strong> Major customers and tender processes are starting to require sustainability performance data from their supply chains. You need a credible answer.</span></li>
+        <li class="signal-item"><div class="signal-dot"></div><span class="signal-text"><strong>You're planning to be here a while.</strong> The best energy strategy is built around a 10-20 year horizon. If you're leasing and moving in three years, the conversation looks different.</span></li>
+        <li class="signal-item"><div class="signal-dot"></div><span class="signal-text"><strong>You own your building.</strong> Renters are largely excluded from the strategies that make the biggest difference. Owner-occupiers have the full set of options.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- BIO -->
+<section class="bio" id="bio">
+  <div class="sec-eyebrow"><span>About Nic</span></div>
+  <h2 class="sec-title">Why I do this work.</h2>
+  <div class="bio-layout">
+    <div class="bio-sticky">
+      <div class="bio-photo">
+        <img src="images/IMG_2074.jpg" alt="Nic Jacobson in a strategy conversation with a client" width="420" height="560" loading="lazy">
+      </div>
+      <div class="bio-name">Nic Jacobson</div>
+      <div class="bio-role">Founder, NECTO Pty Ltd</div>
+      <a href="https://www.linkedin.com/in/nicjacobson/?skipRedirect=true" class="bio-linkedin" target="_blank">
+        Full professional experience on LinkedIn ↗
+      </a>
+      <div class="bio-creds">
+        <span class="bio-cred">CPEng - Chartered Professional Engineer</span>
+        <span class="bio-cred">FIEAust - Fellow of Engineers Australia</span>
+        <span class="bio-cred">MSc Renewable Energy</span>
+        <span class="bio-cred">PGCert Electrical Power Engineering</span>
+      </div>
+    </div>
+    <div>
+      <p class="bio-lede">I started my energy career by travelling to Vanuatu to install solar power systems in remote communities. That trip taught me something I've carried through everything since: the point of energy is never the energy itself. It's what it makes possible for people.</p>
+      <p class="bio-body">Over the past two decades, I've worked across almost every part of the energy sector - wind farm development with Garrad Hassan and Acciona, energy policy for the South Australian Government, international clean energy programs across Southeast Asia and the Pacific as Regional Director for REEEP, and most recently, energy storage technology with Enernet Global and EnerVenue in the US. I've done the work at every level, from installing systems in the field to advising governments on policy to representing Australia at the World Future Energy Summit in Abu Dhabi.</p>
+      <p class="bio-body">What I kept seeing, across all of it, was the same gap. Businesses that had made smart individual decisions - good equipment, sound investments - but no one had ever helped them see the whole picture. No staged strategy. No view of where the journey was actually heading.</p>
+      <p class="bio-body">I started NECTO because I wanted to be that person. Not selling a product. Not tied to a vendor. Just genuinely excited about helping manufacturers figure out what their energy needs are, where they want to go and what strategy it will take to get there.</p>
+      <p class="bio-body">That's what I get to do now. And I love it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT HAPPENS -->
+<section class="what" id="what">
+  <div class="sec-eyebrow"><span>What a full engagement looks like</span></div>
+  <h2 class="sec-title">Beyond the call.</h2>
+  <div class="what-grid">
+    <div class="what-card">
+      <div class="what-num">01</div>
+      <div class="what-title">Whole-of-site assessment</div>
+      <p class="what-body">Energy bills, SCADA data, energy management systems, physical layout and space constraints. A complete picture of when you use energy, in what forms, and what it's actually costing you.</p>
+    </div>
+    <div class="what-card">
+      <div class="what-num">02</div>
+      <div class="what-title">No-regrets strategy</div>
+      <p class="what-body">A staged roadmap built around your planning horizon, ownership structure, and operational goals - designed so the decisions made today hold up in ten years.</p>
+    </div>
+    <div class="what-card">
+      <div class="what-num">03</div>
+      <div class="what-title">Specification & go-to-market</div>
+      <p class="what-body">Specification writing and go-to-market support for implementation. Independent oversight of delivery - not tied to any vendor, not shaped by any product margin.</p>
+    </div>
+  </div>
+</section>
+
+<div class="final-cta">
+  <div class="final-cta-bg" aria-hidden="true"></div>
+  <div class="final-cta-inner">
+    <div class="final-cta-content">
+      <div class="final-cta-eyebrow">Next step</div>
+      <h2 class="final-cta-title">Start with a free 30-minute call.<br>Walk away with at least three things you can act on.</h2>
+      <p class="final-cta-sub">No prep needed. Pick a time that works and I'll do the rest.</p>
+      <a href="https://calendar.notion.so/meet/nic-necto/30min" class="btn-cta-white">Book My Free 30-Minute Call →</a>
+    </div>
+    <div class="final-cta-media" aria-hidden="true"></div>
+  </div>
+</div>
+
+<footer>
+  <img src="images/logo.png" alt="NECTO" class="site-logo" width="280" height="71">
+  <div class="footer-copy">© 2026 NECTO Pty Ltd · Adelaide, South Australia</div>
+</footer>
+
 </body>
 </html>
