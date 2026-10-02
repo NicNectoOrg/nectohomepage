@@ -21,145 +21,48 @@
 <link rel="stylesheet" href="assets/css/site.v1.css">
 <!-- end Notion AI 2026-10-01-->
 
-<!-- Load Turnstile once in the page <head>. -->
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-
 <nav>
   <a href="#top" class="nav-brand"><img src="images/logo.png" alt="NECTO" class="site-logo" width="280" height="71"></a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="index.html#solution">What I do</a></li>
-    <li><a href="index.html#who">Who it's for</a></li>
+    <li><a href="index.html#top">Home</a></li>
+    <li><a href="#solution">What I do</a></li>
+    <li><a href="#who">Who it's for</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
   <a href="https://calendar.notion.so/meet/nic-necto/meet-with-nic" class="nav-cta">Book a Call</a>
 </nav>
 
-<section class="necto-contact" aria-labelledby="contact-heading">
-  <div class="necto-contact__intro">
-    <p class="necto-contact__eyebrow">Start a conversation</p>
-    <h2 id="contact-heading">Tell us what is happening at your site.</h2>
-    <p>
-      Share a little about your operation, current energy challenges and what
-      you want to achieve. NECTO will respond within two business days.
-    </p>
+<!-- BIO -->
+<section class="bio" id="bio">
+  <div class="sec-eyebrow"><span>About Nic</span></div>
+  <h2 class="sec-title">Why I do this work.</h2>
+  <div class="bio-layout">
+    <div class="bio-sticky">
+      <div class="bio-photo">
+        <img src="images/IMG_2074.jpg" alt="Nic Jacobson in a strategy conversation with a client" width="420" height="560" loading="lazy">
+      </div>
+      <div class="bio-name">Nic Jacobson</div>
+      <div class="bio-role">Founder, NECTO Pty Ltd</div>
+      <a href="https://www.linkedin.com/in/nicjacobson/?skipRedirect=true" class="bio-linkedin" target="_blank">
+        Full professional experience on LinkedIn ↗
+      </a>
+      <div class="bio-creds">
+        <span class="bio-cred">CPEng - Chartered Professional Engineer</span>
+        <span class="bio-cred">FIEAust - Fellow of Engineers Australia</span>
+        <span class="bio-cred">MSc Renewable Energy</span>
+        <span class="bio-cred">PGCert Electrical Power Engineering</span>
+      </div>
+    </div>
+    <div>
+      <p class="bio-lede">I started my energy career by travelling to Vanuatu to install solar power systems in remote communities. That trip taught me something I've carried through everything since: the point of energy is never the energy itself. It's what it makes possible for people.</p>
+      <p class="bio-body">Over the past two decades, I've worked across almost every part of the energy sector - wind farm development with Garrad Hassan and Acciona, energy policy for the South Australian Government, international clean energy programs across Southeast Asia and the Pacific as Regional Director for REEEP, and most recently, energy storage technology with Enernet Global and EnerVenue in the US. I've done the work at every level, from installing systems in the field to advising governments on policy to representing Australia at the World Future Energy Summit in Abu Dhabi.</p>
+      <p class="bio-body">What I kept seeing, across all of it, was the same gap. Businesses that had made smart individual decisions - good equipment, sound investments - but no one had ever helped them see the whole picture. No staged strategy. No view of where the journey was actually heading.</p>
+      <p class="bio-body">I started NECTO because I wanted to be that person. Not selling a product. Not tied to a vendor. Just genuinely excited about helping manufacturers figure out what their energy needs are, where they want to go and what strategy it will take to get there.</p>
+      <p class="bio-body">That's what I get to do now. And I love it.</p>
+    </div>
   </div>
-
-  <form id="contact-form" class="contact-form" novalidate>
-    <div class="contact-form__grid">
-      <label>
-        <span>Name <b aria-hidden="true">*</b></span>
-        <input name="name" type="text" autocomplete="name" maxlength="120" required />
-      </label>
-
-      <label>
-        <span>Work email <b aria-hidden="true">*</b></span>
-        <input name="email" type="email" autocomplete="email" maxlength="254" required />
-      </label>
-
-      <label>
-        <span>Phone</span>
-        <input name="phone" type="tel" autocomplete="tel" maxlength="50" />
-      </label>
-
-      <label>
-        <span>Organisation</span>
-        <input name="organisation" type="text" autocomplete="organization" maxlength="200" />
-      </label>
-    </div>
-
-    <label>
-      <span>How can NECTO help? <b aria-hidden="true">*</b></span>
-      <textarea name="message" rows="7" maxlength="2000" required></textarea>
-    </label>
-
-    <!-- Hidden honeypot. Keep out of sight and out of the tab order. -->
-    <label class="contact-form__website" aria-hidden="true">
-      Website
-      <input name="website" type="text" tabindex="-1" autocomplete="off" />
-    </label>
-
-    <label class="contact-form__consent">
-      <input name="consent" type="checkbox" required />
-      <span>
-        I agree that NECTO may use these details to respond to my enquiry.
-        See the <a href="/privacy">privacy policy</a>.
-      </span>
-    </label>
-
-    <!-- Replace YOUR_TURNSTILE_SITE_KEY with the public site key. -->
-    <div class="cf-turnstile" data-sitekey="0x4AAAAAAFL4HIu9p98ZdCN9"></div>
-
-    <div class="contact-form__actions">
-      <button type="submit">Send enquiry</button>
-      <p id="contact-status" role="status" aria-live="polite"></p>
-    </div>
-  </form>
 </section>
-
-<script>
-  (() => {
-    const form = document.getElementById("contact-form");
-    const status = document.getElementById("contact-status");
-    const button = form.querySelector('button[type="submit"]');
-    let startedAt = Date.now();
-
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      status.textContent = "";
-      status.removeAttribute("data-state");
-
-      if (!form.reportValidity()) return;
-
-      const data = new FormData(form);
-      const turnstileToken = data.get("cf-turnstile-response");
-      if (!turnstileToken) {
-        status.textContent = "Please complete the security check.";
-        status.dataset.state = "error";
-        return;
-      }
-
-      button.disabled = true;
-      button.textContent = "Sending…";
-
-      try {
-        const response = await fetch("/api/contact", {
-          method: "POST",
-          headers: { "content-type": "application/json" },
-          body: JSON.stringify({
-            name: data.get("name"),
-            email: data.get("email"),
-            phone: data.get("phone"),
-            organisation: data.get("organisation"),
-            message: data.get("message"),
-            website: data.get("website"),
-            consent: data.get("consent") === "on",
-            turnstileToken,
-            startedAt,
-            sourcePage: window.location.href,
-          }),
-        });
-
-        const result = await response.json();
-        if (!response.ok || !result.ok) {
-          throw new Error(result.error || "We could not send your message.");
-        }
-
-        form.reset();
-        if (window.turnstile) window.turnstile.reset();
-        startedAt = Date.now();
-        status.textContent = "Thanks. Your enquiry has been sent.";
-        status.dataset.state = "success";
-      } catch (error) {
-        status.textContent = error.message || "We could not send your message. Please try again.";
-        status.dataset.state = "error";
-        if (window.turnstile) window.turnstile.reset();
-      } finally {
-        button.disabled = false;
-        button.textContent = "Send enquiry";
-      }
-    });
-  })();
-</script>
 
 <footer>
   <img src="images/logo.png" alt="NECTO" class="site-logo" width="280" height="71">
