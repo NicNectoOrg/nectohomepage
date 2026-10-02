@@ -185,11 +185,11 @@
   .final-cta-media { min-height:12rem; }
 
     .necto-contact {
-    --necto-ink: --dark;
-    --necto-muted: --dark-soft;
-    --necto-accent: --purple;
-    --necto-border: --purple-light;
-    --necto-surface: --off-white;
+    --necto-ink: var(--dark);
+    --necto-muted: var(--dark-soft);
+    --necto-accent: var(--purple);
+    --necto-border: var(--purple-light);
+    --necto-surface: var(--off-white);
     display: grid;
     grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
     gap: clamp(2rem, 6vw, 6rem);
