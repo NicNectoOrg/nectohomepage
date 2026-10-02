@@ -313,6 +313,68 @@
   </div>
 </div>
 
+<section class="necto-contact" aria-labelledby="contact-heading">
+  <div class="necto-contact__intro">
+    <p class="necto-contact__eyebrow">Start a conversation</p>
+    <h2 id="contact-heading">Tell us what is happening at your site.</h2>
+    <p>
+      Share a little about your operation, current energy challenges and what
+      you want to achieve. NECTO will respond within two business days.
+    </p>
+  </div>
+
+  <form id="contact-form" class="contact-form" novalidate>
+    <div class="contact-form__grid">
+      <label>
+        <span>Name <b aria-hidden="true">*</b></span>
+        <input name="name" type="text" autocomplete="name" maxlength="120" required />
+      </label>
+
+      <label>
+        <span>Work email <b aria-hidden="true">*</b></span>
+        <input name="email" type="email" autocomplete="email" maxlength="254" required />
+      </label>
+
+      <label>
+        <span>Phone</span>
+        <input name="phone" type="tel" autocomplete="tel" maxlength="50" />
+      </label>
+
+      <label>
+        <span>Organisation</span>
+        <input name="organisation" type="text" autocomplete="organization" maxlength="200" />
+      </label>
+    </div>
+
+    <label>
+      <span>How can NECTO help? <b aria-hidden="true">*</b></span>
+      <textarea name="message" rows="7" maxlength="2000" required></textarea>
+    </label>
+
+    <!-- Hidden honeypot. Keep out of sight and out of the tab order. -->
+    <label class="contact-form__website" aria-hidden="true">
+      Website
+      <input name="website" type="text" tabindex="-1" autocomplete="off" />
+    </label>
+
+    <label class="contact-form__consent">
+      <input name="consent" type="checkbox" required />
+      <span>
+        I agree that NECTO may use these details to respond to my enquiry.
+        See the <a href="/privacy">privacy policy</a>.
+      </span>
+    </label>
+
+    <!-- Replace YOUR_TURNSTILE_SITE_KEY with the public site key. -->
+    <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
+
+    <div class="contact-form__actions">
+      <button type="submit">Send enquiry</button>
+      <p id="contact-status" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+</section>
+
 <footer>
   <img src="images/logo.png" alt="NECTO" class="site-logo" width="280" height="71">
   <div class="footer-copy">© 2026 NECTO Pty Ltd · Adelaide, South Australia</div>

@@ -1,0 +1,210 @@
+<!-- Load Turnstile once in the page <head>. -->
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<section class="necto-contact" aria-labelledby="contact-heading">
+  <div class="necto-contact__intro">
+    <p class="necto-contact__eyebrow">Start a conversation</p>
+    <h2 id="contact-heading">Tell us what is happening at your site.</h2>
+    <p>
+      Share a little about your operation, current energy challenges and what
+      you want to achieve. NECTO will respond within two business days.
+    </p>
+  </div>
+
+  <form id="contact-form" class="contact-form" novalidate>
+    <div class="contact-form__grid">
+      <label>
+        <span>Name <b aria-hidden="true">*</b></span>
+        <input name="name" type="text" autocomplete="name" maxlength="120" required />
+      </label>
+
+      <label>
+        <span>Work email <b aria-hidden="true">*</b></span>
+        <input name="email" type="email" autocomplete="email" maxlength="254" required />
+      </label>
+
+      <label>
+        <span>Phone</span>
+        <input name="phone" type="tel" autocomplete="tel" maxlength="50" />
+      </label>
+
+      <label>
+        <span>Organisation</span>
+        <input name="organisation" type="text" autocomplete="organization" maxlength="200" />
+      </label>
+    </div>
+
+    <label>
+      <span>How can NECTO help? <b aria-hidden="true">*</b></span>
+      <textarea name="message" rows="7" maxlength="2000" required></textarea>
+    </label>
+
+    <!-- Hidden honeypot. Keep out of sight and out of the tab order. -->
+    <label class="contact-form__website" aria-hidden="true">
+      Website
+      <input name="website" type="text" tabindex="-1" autocomplete="off" />
+    </label>
+
+    <label class="contact-form__consent">
+      <input name="consent" type="checkbox" required />
+      <span>
+        I agree that NECTO may use these details to respond to my enquiry.
+        See the <a href="/privacy">privacy policy</a>.
+      </span>
+    </label>
+
+    <!-- Replace YOUR_TURNSTILE_SITE_KEY with the public site key. -->
+    <div class="cf-turnstile" data-sitekey="YOUR_TURNSTILE_SITE_KEY"></div>
+
+    <div class="contact-form__actions">
+      <button type="submit">Send enquiry</button>
+      <p id="contact-status" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+</section>
+
+<style>
+  .necto-contact {
+    --necto-ink: #172320;
+    --necto-muted: #5c6965;
+    --necto-accent: #d87738;
+    --necto-border: #cbd3d0;
+    --necto-surface: #f5f6f3;
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    padding: clamp(3rem, 8vw, 7rem) clamp(1.25rem, 6vw, 6rem);
+    color: var(--necto-ink);
+    background: var(--necto-surface);
+  }
+  .necto-contact__intro { max-width: 34rem; }
+  .necto-contact__eyebrow {
+    margin: 0 0 0.75rem;
+    color: var(--necto-accent);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .necto-contact h2 {
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 4vw, 3.6rem);
+    line-height: 1.05;
+  }
+  .necto-contact p { line-height: 1.65; }
+  .contact-form { display: grid; gap: 1.25rem; }
+  .contact-form__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+  .contact-form label { display: grid; gap: 0.5rem; font-weight: 650; }
+  .contact-form input,
+  .contact-form textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid var(--necto-border);
+    border-radius: 0.3rem;
+    padding: 0.85rem 0.95rem;
+    color: var(--necto-ink);
+    background: #fff;
+    font: inherit;
+  }
+  .contact-form input:focus,
+  .contact-form textarea:focus {
+    outline: 3px solid color-mix(in srgb, var(--necto-accent) 28%, transparent);
+    border-color: var(--necto-accent);
+  }
+  .contact-form__consent {
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    font-size: 0.92rem;
+    font-weight: 400 !important;
+  }
+  .contact-form__consent input { width: 1.1rem; margin-top: 0.2rem; }
+  .contact-form__website { position: absolute; left: -10000px; }
+  .contact-form__actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+  .contact-form button {
+    border: 0;
+    border-radius: 999px;
+    padding: 0.9rem 1.4rem;
+    color: #fff;
+    background: var(--necto-accent);
+    font: inherit;
+    font-weight: 750;
+    cursor: pointer;
+  }
+  .contact-form button:hover { filter: brightness(0.92); }
+  .contact-form button:disabled { cursor: wait; opacity: 0.65; }
+  #contact-status { margin: 0; color: var(--necto-muted); }
+  #contact-status[data-state="error"] { color: #a52b20; }
+  #contact-status[data-state="success"] { color: #17623c; }
+  @media (max-width: 760px) {
+    .necto-contact, .contact-form__grid { grid-template-columns: 1fr; }
+  }
+</style>
+
+<script>
+  (() => {
+    const form = document.getElementById("contact-form");
+    const status = document.getElementById("contact-status");
+    const button = form.querySelector('button[type="submit"]');
+    let startedAt = Date.now();
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      status.textContent = "";
+      status.removeAttribute("data-state");
+
+      if (!form.reportValidity()) return;
+
+      const data = new FormData(form);
+      const turnstileToken = data.get("cf-turnstile-response");
+      if (!turnstileToken) {
+        status.textContent = "Please complete the security check.";
+        status.dataset.state = "error";
+        return;
+      }
+
+      button.disabled = true;
+      button.textContent = "Sending…";
+
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: { "content-type": "application/json" },
+          body: JSON.stringify({
+            name: data.get("name"),
+            email: data.get("email"),
+            phone: data.get("phone"),
+            organisation: data.get("organisation"),
+            message: data.get("message"),
+            website: data.get("website"),
+            consent: data.get("consent") === "on",
+            turnstileToken,
+            startedAt,
+            sourcePage: window.location.href,
+          }),
+        });
+
+        const result = await response.json();
+        if (!response.ok || !result.ok) {
+          throw new Error(result.error || "We could not send your message.");
+        }
+
+        form.reset();
+        if (window.turnstile) window.turnstile.reset();
+        startedAt = Date.now();
+        status.textContent = "Thanks. Your enquiry has been sent.";
+        status.dataset.state = "success";
+      } catch (error) {
+        status.textContent = error.message || "We could not send your message. Please try again.";
+        status.dataset.state = "error";
+        if (window.turnstile) window.turnstile.reset();
+      } finally {
+        button.disabled = false;
+        button.textContent = "Send enquiry";
+      }
+    });
+  })();
+</script>
